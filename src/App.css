@@ -1,0 +1,302 @@
+
+
+/* Base Reset */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fff0f5;
+  margin: auto;
+  padding: 0;
+  color: #4c3b4d;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  justify-content: center;
+  height: 100%;
+}
+
+
+h1, h2, h3 {
+  font-family: 'Lora', serif;
+}
+
+.view-buttons button {
+  margin-right: 8px;
+  margin-bottom: 8px;
+  background: #ffe4e1;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.2s;
+}
+
+.thumbnail.original {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 300px; /* or whatever works best visually */
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+
+.gallery {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+.thumbnail-wrapper.original {
+  flex: 0 0 auto;
+}
+
+
+.view-buttons button:hover {
+  background: #ffb6c1;
+}
+
+.download-btn {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background: #cacaca;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 28px;
+  z-index: 2;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn:hover {
+  background: #ff69b4;
+}
+
+
+/* Container */
+.container {
+  max-width: 100%;
+ margin: auto;
+  padding: 6rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(233, 170, 200, 0.2);
+  transition: background-color 0.3s, color 0.3s;
+}
+#root {
+  width: 50%;
+padding-top: 6rem;
+}
+
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.toggle {
+  background: #ffb6c1;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 50px;
+  color: #4c3b4d;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: #ffe4e1;
+  color: #4c3b4d;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.tabs .active {
+  background-color: #ff69b4;
+  color: white;
+}
+
+/* Notes */
+.notes {
+  width: 100%;
+  height: 300px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ffc0cb;
+  border-radius: 8px;
+  resize: vertical;
+  background: #fffafc;
+}
+
+/* Gallery grid */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 1rem;
+}
+
+/* Thumbnail size modifiers */
+.thumbnail-wrapper.small {
+  width: 70px;
+  height: 70px;
+}
+
+.thumbnail-wrapper.medium {
+  width: 100px;
+  height: 100px;
+}
+
+.thumbnail-wrapper.large {
+  width: 150px;
+  height: 150px;
+}
+
+.thumbnail-wrapper.original {
+  width: auto;
+  height: auto;
+}
+
+/* Image wrapper */
+.thumbnail-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: border 0.2s ease;
+}
+
+.thumbnail-wrapper:hover {
+  outline: 2px dashed #ffa6c9;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.thumbnail.original {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Delete button */
+.delete-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 0%;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* Dark mode support */
+.dark {
+  background-color: #3e3e3e;
+  color: #fdfdfd;
+}
+
+.floating-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #ffb6c1;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 50px;
+  color: #4c3b4d;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.dark .floating-toggle {
+  background: #ff69b4;
+  color: white;
+}
+
+
+.dark .container {
+  background: #2f2f2f;
+  color: #fff;
+}
+
+.dark .tabs button {
+  background: #555;
+  color: #eee;
+}
+
+.dark .tabs .active {
+  background-color: #ff69b4;
+  color: #fff;
+}
+
+.dark .notes {
+  background: #444;
+  color: #f0f0f0;
+  border: 1px solid #999;
+}
+
+.dark .toggle {
+  background: #ff69b4;
+  color: white;
+}
+
+.dark input[type='file'],
+.dark input[type='text'] {
+  background: #333;
+  color: #fff;
+  border: 1px solid #999;
+}
+
+/* Input & Button Styling */
+input[type='text'] {
+  border-radius: 8px;
+  border: 1px solid #ffb6c1;
+  background: #fffafc;
+  padding: 10px;
+}
+
+button {
+  font-family: 'Quicksand', sans-serif;
+}
+
+
