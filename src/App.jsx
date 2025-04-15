@@ -14,6 +14,7 @@ import {
   verticalListSortingStrategy
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import heic2any from "heic2any";
 
 // Draggable + selectable image card
 function SortableImage({ src, id, onDelete, size, selectMode, selected, onSelect }) {
@@ -66,12 +67,24 @@ function App() {
   const [images, setImages] = useState([]);
   const [notes, setNotes] = useState('');
   const [darkMode, setDarkMode] = useState(false);
-  const [imageSize, setImageSize] = useState('medium');
+  const [imageSize, setImageSize] = useState('grid2'); // ✅ NEW DEFAULT
+
   const [tab, setTab] = useState('gallery');
   const [imageUrl, setImageUrl] = useState('');
   const [selectMode, setSelectMode] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
-  const sensors = useSensors(useSensor(PointerSensor));
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10, // Start dragging after finger moves 10px (prevents accidental drag)
+      },
+    })
+  );
+  const [isDragging, setIsDragging] = useState(false);
+
+
+
+  
 
   // Load saved state on mount
   useEffect(() => {
@@ -112,6 +125,7 @@ function App() {
 
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
+  
     const readFileAsDataURL = (file) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -119,9 +133,27 @@ function App() {
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
-
-    const newImageData = await Promise.all(files.map(readFileAsDataURL));
-    setImages((prev) => [...prev, ...newImageData]);
+  
+    const convertIfHeic = async (file) => {
+      if (file.type === "image/heic" || file.name.endsWith(".heic")) {
+        try {
+          const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
+          return await readFileAsDataURL(convertedBlob);
+        } catch (err) {
+          console.error("HEIC conversion failed:", err);
+          return null;
+        }
+      } else {
+        return await readFileAsDataURL(file);
+      }
+    };
+  
+    const imageData = await Promise.all(
+      files.map((file) => convertIfHeic(file))
+    );
+  
+    const validImages = imageData.filter(Boolean); // remove failed conversions
+    setImages((prev) => [...prev, ...validImages]);
   };
 
   const handleAddImageUrl = () => {
@@ -176,6 +208,35 @@ function App() {
               Add
             </button>
           </div>
+
+          <div
+  className={`dropzone ${isDragging ? 'drag-active' : ''}`}
+  onDragOver={(e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }}
+  onDragLeave={() => setIsDragging(false)}
+  onDrop={(e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = Array.from(e.dataTransfer.files);
+    handleImageUpload({ target: { files } });
+  }}
+  onClick={() => document.getElementById('fileInput').click()}
+>
+  <p>{isDragging ? '🎯 Drop to add' : '📎 Drag & drop images here or tap to upload'}</p>
+  <input
+    id="fileInput"
+    type="file"
+    accept="image/*"
+    multiple
+    onChange={handleImageUpload}
+    style={{ display: 'none' }}
+  />
+</div>
+
+
+          
 
           <div style={{ margin: '1rem 0' }}>
             <div className="view-buttons">

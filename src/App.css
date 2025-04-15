@@ -100,6 +100,67 @@ h1, h2, h3 {
   background: #ff69b4;
 }
 
+.dropzone {
+  border: 2px dashed #ffa6c9;
+  background: #fff0f5;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  color: #ff69b4;
+  cursor: pointer;
+  margin: 1rem 0;
+  transition: background 0.2s ease;
+}
+
+.dropzone:hover {
+  background: #ffe6ee;
+}
+
+.dropzone p {
+  margin: 0;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+}
+
+.dropzone {
+  border: 2px dashed #ffa6c9;
+  background: #fff0f5;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  color: #ff69b4;
+  cursor: pointer;
+  margin: 1rem 0;
+  transition: all 0.2s ease;
+}
+
+.dropzone.drag-active {
+  background-color: #ffe6ee;
+  border-color: #ff4d94;
+  transform: scale(1.02);
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.3);
+}
+
+
+.thumbnail-wrapper {
+  touch-action: none; /* Prevents screen scroll during drag on mobile */
+}
+
+.thumbnail-wrapper.grid2,
+.thumbnail.grid2 {
+  width: calc(50% - 12px); /* 2 images per row with spacing */
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 500px) {
+  .thumbnail-wrapper.grid2,
+  .thumbnail.grid2 {
+    width: calc(50% - 8px);
+  }
+}
+
 
 /* Container */
 .container {
