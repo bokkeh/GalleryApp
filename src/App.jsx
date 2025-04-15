@@ -17,7 +17,7 @@ import { CSS } from '@dnd-kit/utilities';
 import heic2any from "heic2any";
 
 // Draggable + selectable image card
-function SortableImage({ src, id, onDelete, size, selectMode, selected, onSelect }) {
+function SortableImage({ src, id, onDelete, size, selectMode, selected, onSelect, setLightboxImage }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
@@ -37,7 +37,18 @@ function SortableImage({ src, id, onDelete, size, selectMode, selected, onSelect
         if (selectMode) onSelect(id);
       }}
     >
-      <img src={src} alt="gallery" className={`thumbnail ${size}`} />
+     <img
+  src={src}
+  alt="gallery"
+  className={`thumbnail ${size}`}
+  onClick={(e) => {
+    e.stopPropagation();
+    if (!selectMode) {
+      setLightboxImage(src); // Trigger lightbox!
+    }
+  }}
+/>
+
       {!selectMode && (
         <>
           <button
@@ -68,6 +79,8 @@ function App() {
   const [notes, setNotes] = useState('');
   const [darkMode, setDarkMode] = useState(false);
   const [imageSize, setImageSize] = useState('grid2'); // ✅ NEW DEFAULT
+  const [lightboxImage, setLightboxImage] = useState(null);
+
 
   const [tab, setTab] = useState('gallery');
   const [imageUrl, setImageUrl] = useState('');
@@ -277,6 +290,7 @@ function App() {
                     onDelete={handleDeleteImage}
                     selectMode={selectMode}
                     selected={selectedImages.includes(src)}
+                    setLightboxImage={setLightboxImage}
                     onSelect={(imgId) => {
                       setSelectedImages((prev) =>
                         prev.includes(imgId)
@@ -300,6 +314,12 @@ function App() {
           className="notes"
         />
       )}
+      {lightboxImage && (
+  <div className="lightbox" onClick={() => setLightboxImage(null)}>
+    <img src={lightboxImage} alt="Full view" />
+  </div>
+)}
+
     </div>
   );
 }
